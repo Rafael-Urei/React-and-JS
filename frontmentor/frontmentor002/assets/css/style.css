@@ -1,16 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Space Grotesk', sans-serif;
 }
-
-:root {
-    --veryLightGray: hsl(0, 0%, 98%);
-    --grayishBlue: hsl(229, 6%, 66%);
-    --veryDarkBlue: hsl(234, 12%, 34%);
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 html {
     min-height: 100%;
@@ -18,189 +13,136 @@ html {
 
 body {
     min-height: 100vh;
-    background: var(--veryLightGray);
-    color: var(--grayishBlue);
-    font-family: 'Poppins', sans-serif;
-    font-size: 15px;
-    animation-name: bgchangecolor;
-    animation-duration: 14s;
-    animation-iteration-count: infinite;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 50px 0px 50px 0px;
-}
-
-.head {
-    text-align: center;
-}
-
-.h1_head {
-    font-weight: 200;
-    margin-bottom: 20px;
-}
-
-.p_head {
-    font-size: 1.15em;
-    line-height: 1.5em;
-    padding: 0px 40px 0px 40px;
-}
-
-.h1_head span {
-    color: var(--veryDarkBlue);
-}
-
-.grid {
+main {
     display: grid;
-    grid-template-columns: 300px 300px 300px;
-    grid-template-rows: 250px 250px 250px;
+    grid-auto-flow: column;
+    gap: 50px;
+    position: relative;
+}
+
+#purple-background {
+    background-image: url(../images/bg-main-desktop.png);
+    background-size: cover;
+    height: 100vh;
+    max-width: 60%;
+}
+
+#card {
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    display: grid;
+    grid-template-rows: 245px;
+    grid-template-columns: 500px;
+    gap: 30px;
+    scale: 0.9;
+}
+
+#card img {
+    box-shadow: -10px 20px 25px hsla(278, 68%, 11%, 0.13);
+}
+
+#back-card {
+    justify-self: end;
+}
+
+.form-section {
+    display: flex;
+    max-width: 100%;
+    align-items: center;
     justify-content: center;
-    column-gap: 75px;
+}
+
+form {
+    display: grid;
+    grid-auto-rows: auto;
     row-gap: 20px;
+    max-width: 300px;
+    min-width: 300px;
+    scale: 1.1;
 }
 
-.card {
+form > div {
     display: flex;
     flex-direction: column;
-    width: 350px;
-    height: 250px;
-    padding: 20px;
-    box-shadow: 0px 6px 15px hsla(229, 6%, 66%, 0.267);
-    border-radius: 6px;
-    font-size: 0.8em;
-    color: var(--veryDarkBlue);
-    border: 2px solid white;
-    transition: 300ms;
-    background-color: white;
-    justify-content: space-between;
-    filter: grayscale(80%);
-    cursor: pointer;
+    row-gap: 5px;
 }
 
-.card2 {
-    display: flex;
-    flex-direction: column;
-    width: 350px;
-    height: 250px;
-    padding: 20px;
-    box-shadow: 0px 6px 15px hsla(229, 6%, 66%, 0.267);
-    border-radius: 6px;
-    font-size: 0.8em;
-    color: var(--veryDarkBlue);
-    border: 2px solid white;
-    transition: 300ms;
-    background-color: white;
-    justify-content: space-between;
-    filter: grayscale(0);
-    cursor: pointer;
-    transform: scale(1.03);
+label {
+    font-size: 10px;
+    font-weight: 600;
+    color: hsl(278, 67%, 19%);
+    letter-spacing: 0.1em;
 }
 
-.card h2 {
-    margin-bottom: 10px;
+#first-child, #second-child {
+    font-size: 12px;
+    font-weight: 500;
+    color: hsl(278, 67%, 19%);
 }
 
-.card p {
-    color: hsl(229, 6%, 66%);
-    line-height: 2em;
-    padding-left: 5px;
+input {
+    font-size: 14px;
+    height: 35px;
+    border-style: hidden;
+    box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.212);
+    border-radius: 8px;
+    font-weight: 600;
+    text-indent: 15px;
+    color: hsl(278, 67%, 19%);
 }
 
-#card1 {
-    grid-column-start: 1;
-    grid-row-start: 2;
+input::-webkit-input-placeholder {
+    opacity: 30%;
 }
 
-#card2 {
-    grid-column-start: 2;
-    grid-row-start: 1;
-    margin-top: 45%;
+#div-row {
+    flex-direction: row;
+    gap: 5px;
 }
 
-#card3 {
-    grid-column-start: 3;
-    grid-row-start: 2;
+#first-child input {
+    margin-top: 5px;
+    width: 57px;
 }
 
-#card4 {
-    grid-column-start: 2;
-    grid-row-start: 3;
-    margin-top: -45%;
+#second-child input {
+    margin-top: 5px;
 }
 
-.image {
-    display: flex;
-    justify-content: flex-end;
+button {
+    background-color: hsl(278, 68%, 11%);
+    color: white;
+    height: 40px;
+    border-radius: 5px;
 }
 
-.img {
-    transition: 100ms;
-    transform: rotate(0deg);
+#error {
+    font-size: 12px;
+    color: red;
+    border-color: red;
 }
 
-.img2 {
-    animation-duration: 250ms;
-    animation-name: slidein;
-    transition: 200ms;
+.input {
+    font-size: 14px;
+    height: 35px;
+    border-style: hidden;
+    box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.212);
+    border-radius: 8px;
+    font-weight: 600;
+    text-indent: 15px;
+    color: hsl(278, 67%, 19%);
 }
 
-
-@keyframes bgchangecolor {
-    from {
-        background-color: var(--veryLightGray);
-    }
-
-    35% {
-        background-color: var(--grayishBlue);
-        color: white;
-    }
-
-    50% {
-        background-color: rgb(12, 27, 49);
-        color: white;
-    }
-
-    75% {
-        background-color: var(--veryLightGray);
-    }
-}
-
-@keyframes slidein {
-    from {
-        rotate: 0deg;
-    }
-
-    25% {
-        rotate: 15deg;
-    }
-
-    75% {
-        rotate: -15deg;
-    }
-
-    to {
-        rotate: 0deg;
-    }
-}
-
-@media all and (max-width: 800px) {
-
-    .head {
-        margin-bottom: 20px;
-    }
-
-    .grid {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: auto;
-    }
-
-    #card2, #card4 {
-        margin-top: 0;
-    }
+.input_error {
+    font-size: 14px;
+    height: 35px;
+    border-style: hidden;
+    box-shadow: inset 0px 0px 1px 1px hsl(347, 81%, 48%);
+    border-radius: 8px;
+    font-weight: 600;
+    text-indent: 15px;
+    color: hsl(347, 81%, 48%);
 }
