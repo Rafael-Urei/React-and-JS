@@ -7,8 +7,11 @@ import cardimg from '../src/card-logo.svg'
 import { useReducer, useState } from 'react';
 import { Route, BrowserRouter } from 'react-router-dom';
 
-function Form(){
-  const [cardNumber, setValue] = useState('0000 0000 0000 0000');
+function App(){
+
+  //### Old version!
+
+  /*const [cardNumber, setValue] = useState('0000 0000 0000 0000');
   const [cardName, setName] = useState('JANNE APPLESEED');
   const [cardMonth, setMonth] = useState('mm');
   const [cardYear, setYear] = useState('yy');
@@ -24,10 +27,30 @@ function Form(){
   const handleAddYear = event => setYear(event.target.value);
 
   const handleAddCvc = event => setCvv(event.target.value);
+  */
 
   const handleSubmit = event => {
     setButton(event.preventDefault());
   }
+
+  const [value, setValues] = useState({
+    name: '',
+    number: '',
+    month: '',
+    year: '',
+    cvc: '',
+  })
+
+  const handleChange = ((event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setValues((prevState) => {
+      return {
+        ...prevState,
+        [name]: value
+      };
+    })
+  });
 
   return (
     <div className='Form'>
@@ -53,29 +76,50 @@ function Form(){
           <label>CARDHOLDER NAME</label>
           <IMaskInput 
             type='text' 
+            name='name'
             placeholder='e.g. Jane Appleseed' 
             className='cardholder-name-input'
-            onChange={handleAddName}
+            onChange={handleChange}
           />
           <label htmlFor='card-number-input'>CARD NUMBER</label>
           <IMaskInput
             mask={"0000 0000 0000 0000"}
+            name='number'
             placeholder = 'e.g. 1234 5678 9123 0000'
             type='text' maxLength='20'
-            onChange={handleAddNum}
+            onChange={handleChange}
             className='card-input'
           />
           <div className='exp-cvc'>
             <div className='first-child-exp'>
               <label>EXP. DATE (MM/YY)</label>
-              <IMaskInput mask={"00"} type='text' className='month-number-input' maxLength={'2'} placeholder='MM' onChange={handleAddMonth}
+              <IMaskInput 
+                mask={"00"} type='text' 
+                name='month'
+                className='month-number-input' 
+                maxLength={'2'} placeholder='MM' 
+                onChange={handleChange}
               />
-              <IMaskInput mask={"00"} type='text' className='year-number-input' maxLength={'2'} placeholder='YY' onChange={handleAddYear}
+              <IMaskInput 
+                mask={"00"} 
+                type='text' 
+                name='year'
+                className='year-number-input' 
+                maxLength={'2'} 
+                placeholder='YY' 
+                onChange={handleChange}
               />
             </div>
             <div className='second-child-cvc'>
               <label>CVC</label>
-              <IMaskInput mask={"000"} type='text' className='cvc-input' maxLength={'3'} placeholder='e.g. 123' onChange={handleAddCvc}
+              <IMaskInput 
+                mask={"000"} 
+                type='text' 
+                name='cvc'
+                className='cvc-input' 
+                maxLength={'3'} 
+                placeholder='e.g. 123' 
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -85,4 +129,4 @@ function Form(){
   );
 }
 
-export default Form;
+export default App;
