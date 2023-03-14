@@ -21,6 +21,7 @@ function App() {
         }
       ]
     })
+    setValue('');
   };
 
   const handleRemove = () => {
@@ -36,26 +37,31 @@ function App() {
   console.log(tasks);
   return (
     <div className="App">
-      <form onSubmit={preventDefault}>
-        <input type='text' name='input' placeholder='e.g. Study React.JS' onChange={handleAddValue}></input>
-        <button onClick={handleAddTask}>Add task</button>
-        <ul>
-          { tasks.length === 0 ? 
-              <p>There are no posts yet!</p> :
-            tasks.map((item, index) => {
-              return (
-                <li
-                  key={item.key}
-                  className='task'>
-                  {item.value}
-                  <input type='checkbox' onChange={() => handleChange(item.key)}></input>
-                </li>
-              )
-            })
-          }
-        </ul>
-        <button onClick={handleRemove}>Remove</button>
-      </form>
+      <main>
+        <form onSubmit={preventDefault}>
+          <input type='text' name='input' value={value} placeholder='e.g. Study React.JS' onChange={handleAddValue}></input>
+          <button onClick={handleAddTask}>Add task</button>
+          <ul>
+            { tasks.length === 0 ? 
+                <p>There are no posts yet!</p> :
+              tasks.map((item, index) => {
+                return (
+                  <li
+                    key={item.key}
+                    className='task'>
+                    {item.value}
+                    <label className='container'>
+                      <input type='checkbox' className='checkbox' onChange={() => handleChange(item.key)}></input>
+                      <span className='alternative-checkbox'></span>
+                    </label>
+                  </li>
+                )
+              })
+            }
+          </ul>
+          <button onClick={handleRemove}>Remove</button>
+        </form>
+      </main>
     </div>
   );
 }
