@@ -1,26 +1,46 @@
 import { useState } from 'react';
 import uuid from 'react-uuid';
 import './App.css';
+import { AiOutlinePlus} from 'react-icons/ai';
+import { BiSquareRounded, BiTrash } from 'react-icons/bi';
+import { FiMoreHorizontal } from 'react-icons/fi';
+import { RxEyeNone } from 'react-icons/rx';
+
+
+function DropDown() {
+  return (
+    <div className='dropdown'>
+      <p>Edit</p>
+    </div>
+  )
+}
 
 function App() {
   const [value, setValue] = useState('');
   const [tasks, setTasks] = useState([]);
+  const [dropdown, setDropdown] = useState({
+    show: false,
+    key: '',
+  })
 
   const handleAddValue = e => setValue(e.target.value);
 
   const preventDefault = e => e.preventDefault();
 
   const handleAddTask = () => {
-    setTasks((prevState) => {
-      return [
-        ...prevState,
-        {
-          key: uuid(),
-          value: value,
-          checked: false
-        }
-      ]
-    })
+    { value !== '' ? 
+      setTasks((prevState) => {
+        return [
+          ...prevState,
+          {
+            key: uuid(),
+            value: value,
+            checked: false,
+          }
+        ]
+      })
+      : alert('Input cannot be blank! Type something.');
+    }
     setValue('');
   };
 
@@ -35,31 +55,47 @@ function App() {
   };
 
   console.log(tasks);
+
+  const handleOpenDropdown = (key) => {
+    setDropdown((prevState) => {
+      return {
+        key: key,
+        show: key === prevState.key ? !prevState.show  : true
+      }
+    })
+  }
+
   return (
     <div className="App">
       <main>
         <form onSubmit={preventDefault}>
-          <input type='text' name='input' value={value} placeholder='e.g. Study React.JS' onChange={handleAddValue}></input>
-          <button onClick={handleAddTask}>Add task</button>
+          <input type='text' name='input' value={value} placeholder='e.g. Study React.JS' onChange={handleAddValue} className='input' autoComplete='none'></input>
+          <AiOutlinePlus onClick={handleAddTask} className='add-button'/>
           <ul>
-            { tasks.length === 0 ? 
-                <p>There are no posts yet!</p> :
+            { tasks.length === 0 ?
+              <>
+                <RxEyeNone className='no-posts'/>
+                <p>There are no posts yet!</p>
+              </> :
               tasks.map((item, index) => {
                 return (
                   <li
-                    key={item.key}
-                    className='task'>
-                    {item.value}
-                    <label className='container'>
-                      <input type='checkbox' className='checkbox' onChange={() => handleChange(item.key)}></input>
-                      <span className='alternative-checkbox'></span>
-                    </label>
+                  key={item.key}
+                  className={`'' ${item.checked ? 'task' : ''}`}
+                  onClick={() => {handleOpenDropdown(item.key)}}
+                  >
+                  <div className='container'>
+                    <FiMoreHorizontal className='more-options'/>
+                    {`${index} - ${item.value}`}
+                    <BiSquareRounded className={`'checkbox-off' ${item.checked ? 'checkbox-on' : 'checkbox-off'}`} onClick={() => handleChange(item.key)}/>
+                    {dropdown.show && dropdown.key === item.key && <DropDown/>}
+                  </div>
                   </li>
                 )
               })
             }
+            <BiTrash onClick={handleRemove} className='remove-button'/>
           </ul>
-          <button onClick={handleRemove}>Remove</button>
         </form>
       </main>
     </div>
