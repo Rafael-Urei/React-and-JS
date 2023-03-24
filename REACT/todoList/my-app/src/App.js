@@ -1,25 +1,27 @@
 import { useState } from 'react';
 import uuid from 'react-uuid';
 import './App.css';
-import { AiOutlinePlus} from 'react-icons/ai';
+import { AiOutlinePlus, AiFillEdit } from 'react-icons/ai';
 import { BiSquareRounded, BiTrash } from 'react-icons/bi';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { RxEyeNone } from 'react-icons/rx';
 
-const Text = () => {
+const Text = ({ handleEditTask, handleNewValue }) => {
   return (
-    <p className='text'>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <>
+      <textarea className='description-input' placeholder='New task...' onChange={handleNewValue}></textarea>
+      <AiFillEdit className='edit-button' onClick={handleEditTask}>Edit</AiFillEdit>
+    </>
   )
 };
 
-const Li = ({ item, index, handleShowDropdown, handleChange }) => {
+const Li = ({ item, index, handleShowDropdown, handleChange, handleEditTask, handleNewValue }) => {
   return (
     <>
       <li className={item.state ? 'task' : 'li'} onClick={handleShowDropdown}>{`${index}: ${item.value}`}
       <BiSquareRounded className={`'checkbox-off' ${item.checked ? 'checkbox-on' : 'checkbox-off'}`} onClick={handleChange}/>
       </li>
-      {item.state ? <div className='popup'><Text/></div> : null}
+      {item.state ? <div className='popup'><Text handleEditTask={handleEditTask} handleNewValue={handleNewValue}/></div> : null}
     </>
   )
 };
@@ -28,10 +30,18 @@ export default function App() {
 
   const [input_value, setInput_value] = useState('');
   const [tasks, setTasks] = useState([]);
+  const [newValue, setNewValue] = useState('');
 
   const preventDefault = e => e.preventDefault();
 
   const handleGetValue = e => setInput_value(e.target.value);
+
+  const handleNewValue = e => setNewValue(e.target.value);
+
+  const handleEditTask = (key) => {
+    const editedTasks = tasks.map(object  => object.key === key ? { ...object, value: newValue } : object);
+    setTasks(editedTasks);
+  }
 
   const handleAddTasks = () => {
     input_value !== '' ?
@@ -88,7 +98,9 @@ export default function App() {
               </> :
               tasks.map((item, index) => {
                 return (
-                  <Li key={item.key} item={item} index={index} handleShowDropdown={() => handleShowDropdown(item.key)} handleChange={() => {handleChange(item.key)}}>
+                  <Li key={item.key} item={item} index={index} handleShowDropdown={() => handleShowDropdown(item.key)} handleChange={() => {handleChange(item.key)}}
+                  handleEditTask={() => handleEditTask(item.key)} handleNewValue={handleNewValue}
+                  >
                   </Li>
                 )
               })
